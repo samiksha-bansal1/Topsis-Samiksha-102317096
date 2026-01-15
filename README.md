@@ -12,7 +12,7 @@ This repository contains three complete implementations of TOPSIS as part of an 
 |---------|-------------|------|
 | **Program 1** | Command-line Python script | [View Code](./Program1) |
 | **Program 2** | Published PyPI Package | [PyPI Link](https://pypi.org/project/Topsis-Samiksha-102317096/) |
-| **Program 3** | Web Application | [Live Demo](https://your-webapp-url.vercel.app) |
+| **Program 3** | Web Application | [Live Demo](https://topsis-samiksha-102317096-kvch.vercel.app/) |
 
 ---
 
@@ -56,7 +56,7 @@ Flask web app with email notification for TOPSIS results.
 **Features:** File upload • Real-time validation • Email results • Responsive UI
 
 **Links:**
-- 🌐 [Live Demo](https://your-webapp-url.vercel.app)
+- 🌐 [Live Demo](https://topsis-samiksha-102317096-kvch.vercel.app/)
 - 📂 [View Code →](./Program3%20(Webapp))
 
 **Run Locally:**
