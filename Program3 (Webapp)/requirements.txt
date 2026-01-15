@@ -1,0 +1,6 @@
+Flask
+Topsis-Samiksha-102317096
+python-dotenv
+pandas
+numpy
+openpyxl

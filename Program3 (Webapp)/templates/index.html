@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TOPSIS Web Service</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 14px;
+        }
+
+        input[type="file"] {
+            border: none;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background: #1e40af;
+        }
+
+        .note {
+            font-size: 12px;
+            text-align: center;
+            color: #666;
+        }
+
+        /* 🔔 Toast Styles */
+        .toast {
+            visibility: hidden;
+            min-width: 260px;
+            background-color: #22c55e;
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 14px;
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            font-size: 14px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .toast.error {
+            background-color: #ef4444; /* red for error */
+        }
+
+        .toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+
+        @keyframes fadein {
+            from { opacity: 0; bottom: 10px; }
+            to { opacity: 1; bottom: 30px; }
+        }
+
+        @keyframes fadeout {
+            from { opacity: 1; bottom: 30px; }
+            to { opacity: 0; bottom: 10px; }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h2>TOPSIS Web Application</h2>
+
+        <form method="post" enctype="multipart/form-data">
+            <label>Upload CSV File</label>
+            <input type="file" name="file" accept=".csv" required>
+
+            <label>Weights (comma separated)</label>
+            <input type="text" name="weights" placeholder="1,1,1,2" required>
+
+            <label>Impacts (comma separated)</label>
+            <input type="text" name="impacts" placeholder="+,+,-,+" required>
+
+            <label>Email ID</label>
+            <input type="email" name="email" placeholder="example@gmail.com" required>
+
+            <button type="submit">Run TOPSIS</button>
+        </form>
+
+        <p class="note">
+            Result generated using PyPI package
+        </p>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast {% if error %}error{% endif %}">
+        {% if error %}
+            ❌ {{ error }}
+        {% else %}
+            ✅ TOPSIS Result Generated Successfully
+        {% endif %}
+    </div>
+
+    <script>
+        window.onload = function() {
+            {% if toast %}
+                const toast = document.getElementById("toast");
+                toast.classList.add("show");
+                setTimeout(() => { 
+                    toast.classList.remove("show"); 
+                }, 3000);
+            {% endif %}
+        };
+
+        // Clear form after successful submission
+        {% if toast and not error %}
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.querySelector('form');
+            if (form) {
+                form.reset();
+            }
+        });
+        {% endif %}
+    </script>
+</body>
+</html>
