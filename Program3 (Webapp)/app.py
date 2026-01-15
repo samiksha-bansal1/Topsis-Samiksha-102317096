@@ -1,20 +1,18 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import os
+import tempfile
 from topsis_samiksha_102317096 import validate_input, apply_topsis
-from dotenv import load_dotenv
-
-# Load environment variables
-load_dotenv()
 
 # Optional email imports
 import smtplib
 from email.message import EmailMessage
 
 app = Flask(__name__)
-app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key-change-this')
+app.secret_key = os.getenv('SECRET_KEY', 'your-secret-key-change-this-random-string')
 
-UPLOAD_FOLDER = "uploads"
-RESULT_FOLDER = "results"
+# Use /tmp for serverless (Vercel doesn't allow writing to other directories)
+UPLOAD_FOLDER = "/tmp/uploads"
+RESULT_FOLDER = "/tmp/results"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(RESULT_FOLDER, exist_ok=True)
 
@@ -83,9 +81,14 @@ def index():
             if not file.filename.endswith('.csv'):
                 raise ValueError("Only CSV files are allowed")
 
-            # Save uploaded file
-            input_path = os.path.join(UPLOAD_FOLDER, "input.csv")
-            output_path = os.path.join(RESULT_FOLDER, "result.csv")
+            # Save uploaded file with unique name
+            import time
+            timestamp = str(int(time.time()))
+            input_filename = f"input_{timestamp}.csv"
+            output_filename = f"result_{timestamp}.csv"
+            
+            input_path = os.path.join(UPLOAD_FOLDER, input_filename)
+            output_path = os.path.join(RESULT_FOLDER, output_filename)
             file.save(input_path)
 
             # Parse weights and impacts
