@@ -2,159 +2,1233 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>TOPSIS Web Service</title>
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f4f4;
-            height: 100vh;
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --white: #ffffff;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-300: #d4d4d4;
+            --gray-400: #a3a3a3;
+            --gray-500: #737373;
+            --gray-600: #525252;
+            --gray-700: #404040;
+            --gray-800: #262626;
+            --gray-900: #171717;
+            --blue: #2563eb;
+            --blue-dark: #1e40af;
+            --green: #16a34a;
+            --red: #dc2626;
+        }
+
+        html {
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* Header */
+        header {
+            background: var(--white);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 0;
+            width: 100%;
+        }
+
+        .header-content {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 1rem;
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
             align-items: center;
         }
 
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            width: 400px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        .logo {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            text-decoration: none;
+            letter-spacing: -0.02em;
         }
 
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
+        .nav-links {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--gray-600);
+            text-decoration: none;
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .nav-link:hover {
+            color: var(--gray-900);
+        }
+
+        .nav-link svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+        }
+
+        .nav-link span {
+            display: none;
+        }
+
+        /* Container */
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 1.5rem 1rem;
+            width: 100%;
+        }
+
+        /* Page Header */
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.03em;
+            line-height: 1.3;
+        }
+
+        .page-description {
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* Grid Layout */
+        .grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        /* Card */
+        .card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 1.25rem;
+            width: 100%;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 1.25rem;
+            letter-spacing: -0.02em;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 1.25rem;
         }
 
         label {
-            font-weight: bold;
-            font-size: 14px;
+            display: block;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--gray-700);
+            margin-bottom: 0.5rem;
         }
 
-        input, button {
+        input[type="text"],
+        input[type="email"],
+        input[type="file"] {
             width: 100%;
-            padding: 10px;
-            margin-top: 6px;
-            margin-bottom: 15px;
+            padding: 0.625rem 0.75rem;
+            font-size: 0.875rem;
+            border: 1px solid var(--gray-300);
             border-radius: 6px;
-            border: 1px solid #ccc;
-            font-size: 14px;
+            background: var(--white);
+            color: var(--gray-900);
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
         }
 
         input[type="file"] {
-            border: none;
-        }
-
-        button {
-            background: #2563eb;
-            color: white;
-            font-weight: bold;
+            padding: 0.5rem;
             cursor: pointer;
+            font-size: 0.8125rem;
+        }
+
+        input[type="file"]::file-selector-button {
+            padding: 0.375rem 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 4px;
+            background: var(--white);
+            color: var(--gray-700);
+            font-size: 0.8125rem;
+            font-weight: 500;
+            cursor: pointer;
+            margin-right: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        input[type="file"]::file-selector-button:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-400);
+        }
+
+        input.error {
+            border-color: var(--red);
+        }
+
+        input.error:focus {
+            box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+        }
+
+        .helper-text {
+            font-size: 0.75rem;
+            color: var(--gray-500);
+            margin-top: 0.375rem;
+            line-height: 1.4;
+        }
+
+        .error-text {
+            font-size: 0.75rem;
+            color: var(--red);
+            margin-top: 0.375rem;
+            display: none;
+            line-height: 1.4;
+        }
+
+        .error-text.show {
+            display: block;
+        }
+
+        /* Button */
+        .btn {
+            width: 100%;
+            padding: 0.75rem 1.25rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--white);
+            background: var(--blue);
             border: none;
-        }
-
-        button:hover {
-            background: #1e40af;
-        }
-
-        .note {
-            font-size: 12px;
-            text-align: center;
-            color: #666;
-        }
-
-        /* 🔔 Toast Styles */
-        .toast {
-            visibility: hidden;
-            min-width: 260px;
-            background-color: #22c55e;
-            color: white;
-            text-align: center;
             border-radius: 6px;
-            padding: 14px;
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            font-size: 14px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
-        .toast.error {
-            background-color: #ef4444; /* red for error */
+        .btn:hover:not(:disabled) {
+            background: var(--blue-dark);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .spinner {
+            display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Results Section */
+        .results-section {
+            display: none;
+            margin-top: 1.5rem;
+            width: 100%;
+        }
+
+        .results-section.show {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .results-header {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .results-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--gray-900);
+        }
+
+        .results-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .icon-btn {
+            flex: 1;
+            padding: 0.625rem 0.875rem;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            background: var(--white);
+            border: 1px solid var(--gray-300);
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: var(--gray-700);
+        }
+
+        .icon-btn:hover {
+            background: var(--gray-50);
+            border-color: var(--gray-400);
+        }
+
+        .icon-btn svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        /* Results Table */
+        .results-table-wrapper {
+            overflow-x: auto;
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+        }
+
+        .results-table {
+            width: 100%;
+            min-width: 600px;
+            border-collapse: collapse;
+            font-size: 0.8125rem;
+        }
+
+        .results-table th {
+            background: var(--gray-50);
+            padding: 0.75rem 0.625rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--gray-700);
+            border-bottom: 1px solid var(--gray-200);
+            white-space: nowrap;
+            font-size: 0.75rem;
+        }
+
+        .results-table td {
+            padding: 0.75rem 0.625rem;
+            border-bottom: 1px solid var(--gray-200);
+            color: var(--gray-900);
+            font-size: 0.8125rem;
+        }
+
+        .results-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .results-table tbody tr:hover {
+            background: var(--gray-50);
+        }
+
+        .rank-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: var(--blue);
+            color: white;
+            border-radius: 50%;
+            font-weight: 600;
+            font-size: 0.75rem;
+        }
+
+        .rank-badge.rank-1 {
+            background: #f59e0b;
+        }
+
+        .rank-badge.rank-2 {
+            background: #94a3b8;
+        }
+
+        .rank-badge.rank-3 {
+            background: #cd7f32;
+        }
+
+        .score-cell {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 500;
+            font-size: 0.75rem;
+        }
+
+        /* Info Section */
+        .info-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 100%;
+        }
+
+        .info-card {
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 1.25rem;
+        }
+
+        .info-card h3 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+
+        .info-list {
+            list-style: none;
+            font-size: 0.8125rem;
+            color: var(--gray-600);
+            line-height: 1.6;
+        }
+
+        .info-list li {
+            margin-bottom: 0.5rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .info-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--gray-400);
+        }
+
+        /* Sample Files */
+        .sample-item {
+            padding: 0.75rem;
+            border: 1px solid var(--gray-200);
+            border-radius: 6px;
+            margin-bottom: 0.75rem;
+            transition: all 0.2s;
+        }
+
+        .sample-item:hover {
+            border-color: var(--gray-300);
+            background: var(--gray-50);
+        }
+
+        .sample-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .sample-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.375rem;
+        }
+
+        .sample-name {
+            font-size: 0.8125rem;
+            font-weight: 500;
+            color: var(--gray-900);
+        }
+
+        .sample-link {
+            font-size: 0.75rem;
+            color: var(--blue);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+            white-space: nowrap;
+        }
+
+        .sample-link:hover {
+            color: var(--blue-dark);
+        }
+
+        .sample-params {
+            font-size: 0.6875rem;
+            color: var(--gray-500);
+            font-family: 'IBM Plex Mono', monospace;
+            line-height: 1.4;
+            word-break: break-all;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 1rem;
+            left: 1rem;
+            right: 1rem;
+            background: var(--white);
+            border: 1px solid var(--gray-200);
+            border-radius: 8px;
+            padding: 0.875rem 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            opacity: 0;
+            transform: translateY(1rem);
+            pointer-events: none;
+            transition: all 0.3s;
+            z-index: 1000;
         }
 
         .toast.show {
-            visibility: visible;
-            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
         }
 
-        @keyframes fadein {
-            from { opacity: 0; bottom: 10px; }
-            to { opacity: 1; bottom: 30px; }
+        .toast.success {
+            border-left: 3px solid var(--green);
         }
 
-        @keyframes fadeout {
-            from { opacity: 1; bottom: 30px; }
-            to { opacity: 0; bottom: 10px; }
+        .toast.error {
+            border-left: 3px solid var(--red);
+        }
+
+        .toast-message {
+            font-size: 0.8125rem;
+            color: var(--gray-900);
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--gray-200);
+            background: var(--white);
+            padding: 1.5rem 1rem;
+            margin-top: 2rem;
+            width: 100%;
+        }
+
+        .footer-content {
+            max-width: 100%;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            align-items: center;
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 0.8125rem;
+            color: var(--gray-500);
+        }
+
+        .footer-link {
+            color: var(--gray-600);
+            text-decoration: none;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-links .footer-link {
+            font-size: 0.8125rem;
+            color: var(--gray-600);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links .footer-link:hover {
+            color: var(--gray-900);
+        }
+
+        /* Desktop styles */
+        @media (min-width: 768px) {
+            html {
+                font-size: 16px;
+            }
+
+            .header-content {
+                max-width: 1200px;
+                padding: 1.25rem 2rem;
+            }
+
+            .logo {
+                font-size: 1.125rem;
+            }
+
+            .nav-links {
+                gap: 2rem;
+            }
+
+            .nav-link {
+                font-size: 0.9375rem;
+            }
+
+            .nav-link span {
+                display: inline;
+            }
+
+            .container {
+                max-width: 1200px;
+                padding: 4rem 2rem;
+            }
+
+            .page-header {
+                margin-bottom: 3rem;
+            }
+
+            .page-title {
+                font-size: 2.25rem;
+                margin-bottom: 0.75rem;
+            }
+
+            .page-description {
+                font-size: 1.0625rem;
+                max-width: 600px;
+            }
+
+            .grid {
+                display: grid;
+                grid-template-columns: 1fr 360px;
+                gap: 3rem;
+            }
+
+            .card {
+                padding: 2rem;
+            }
+
+            .card-title {
+                font-size: 1.125rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .form-group {
+                margin-bottom: 1.5rem;
+            }
+
+            label {
+                font-size: 0.875rem;
+            }
+
+            input[type="text"],
+            input[type="email"] {
+                padding: 0.625rem 0.875rem;
+                font-size: 0.9375rem;
+            }
+
+            .btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9375rem;
+            }
+
+            .results-section {
+                margin-top: 2rem;
+            }
+
+            .results-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .results-title {
+                font-size: 1.125rem;
+            }
+
+            .results-actions {
+                gap: 0.75rem;
+            }
+
+            .icon-btn {
+                flex: initial;
+                padding: 0.5rem 1rem;
+                font-size: 0.875rem;
+            }
+
+            .results-table {
+                font-size: 0.875rem;
+            }
+
+            .results-table th,
+            .results-table td {
+                padding: 0.875rem 1rem;
+            }
+
+            .results-table th {
+                font-size: 0.875rem;
+            }
+
+            .rank-badge {
+                width: 28px;
+                height: 28px;
+                font-size: 0.8125rem;
+            }
+
+            .score-cell {
+                font-size: 0.875rem;
+            }
+
+            .info-card {
+                padding: 1.5rem;
+            }
+
+            .info-card h3 {
+                font-size: 0.9375rem;
+            }
+
+            .info-list {
+                font-size: 0.875rem;
+            }
+
+            .sample-item {
+                padding: 0.875rem;
+            }
+
+            .sample-name {
+                font-size: 0.875rem;
+            }
+
+            .sample-link {
+                font-size: 0.8125rem;
+            }
+
+            .sample-params {
+                font-size: 0.75rem;
+            }
+
+            .toast {
+                left: auto;
+                right: 2rem;
+                bottom: 2rem;
+                min-width: 320px;
+            }
+
+            .toast-message {
+                font-size: 0.875rem;
+            }
+
+            footer {
+                padding: 2rem;
+                margin-top: 4rem;
+            }
+
+            .footer-content {
+                max-width: 1200px;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .footer-text,
+            .footer-links .footer-link {
+                font-size: 0.875rem;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="card">
-        <h2>TOPSIS Web Application</h2>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="/" class="logo">TOPSIS Web Service</a>
+            <nav class="nav-links">
+                <a href="https://github.com/samiksha-bansal1/Topsis-Samiksha-102317096" class="nav-link" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    <span>GitHub</span>
+                </a>
+                <a href="https://pypi.org/project/topsis-samiksha-102317096/" class="nav-link" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 2.286a9.714 9.714 0 110 19.428 9.714 9.714 0 010-19.428zM9.429 6.857v10.286h2.285V6.857H9.43zm3.428 0v10.286h2.286V6.857h-2.286z"/>
+                    </svg>
+                    <span>PyPI</span>
+                </a>
+                <a href="https://github.com/samiksha-bansal1/Topsis-Samiksha-102317096#usage" class="nav-link" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M12 16v-4M12 8h.01"/>
+                    </svg>
+                    <span>Documentation</span>
+                </a>
+            </nav>
+        </div>
+    </header>
 
-        <form method="post" enctype="multipart/form-data">
-            <label>Upload CSV File</label>
-            <input type="file" name="file" accept=".csv" required>
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Multi-Criteria Decision Analysis</h1>
+            <p class="page-description">
+                TOPSIS ranks alternatives based on multiple criteria by calculating their similarity to the ideal solution.
+            </p>
+        </div>
 
-            <label>Weights (comma separated)</label>
-            <input type="text" name="weights" placeholder="1,1,1,2" required>
+        <!-- Grid Layout -->
+        <div class="grid">
+            <!-- Main Form -->
+            <div>
+                <div class="card">
+                    <h2 class="card-title">Analysis Form</h2>
 
-            <label>Impacts (comma separated)</label>
-            <input type="text" name="impacts" placeholder="+,+,-,+" required>
+                    <form id="topsisForm" method="post" enctype="multipart/form-data">
+                        <!-- CSV File -->
+                        <div class="form-group">
+                            <label for="file">CSV Data File</label>
+                            <input type="file" id="file" name="file" accept=".csv" required>
+                            <p class="helper-text">Upload a CSV file with alternatives and criteria</p>
+                            <p class="error-text" id="fileError">Please upload a valid CSV file</p>
+                        </div>
 
-            <label>Email ID</label>
-            <input type="email" name="email" placeholder="example@gmail.com" required>
+                        <!-- Weights -->
+                        <div class="form-group">
+                            <label for="weights">Weights</label>
+                            <input type="text" id="weights" name="weights" placeholder="1,1,1,2" required>
+                            <p class="helper-text">Comma-separated numeric values (e.g., 1,1,1,2)</p>
+                            <p class="error-text" id="weightsError">Weights must be numeric values separated by commas</p>
+                        </div>
 
-            <button type="submit">Run TOPSIS</button>
-        </form>
+                        <!-- Impacts -->
+                        <div class="form-group">
+                            <label for="impacts">Impacts</label>
+                            <input type="text" id="impacts" name="impacts" placeholder="+,+,-,+" required>
+                            <p class="helper-text">+ for benefit, - for cost (e.g., +,+,-,+)</p>
+                            <p class="error-text" id="impactsError">Impacts must be '+' or '-' separated by commas</p>
+                        </div>
 
-        <p class="note">
-            Result generated using PyPI package
-        </p>
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+                            <p class="helper-text">Results will be sent to this email</p>
+                            <p class="error-text" id="emailError">Please enter a valid email address</p>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn" id="submitBtn">
+                            <span id="btnText">Run Analysis</span>
+                            <span class="spinner" id="spinner"></span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Results Section -->
+                <div class="results-section" id="resultsSection">
+                    <div class="card">
+                        <div class="results-header">
+                            <h3 class="results-title">Analysis Results</h3>
+                            <div class="results-actions">
+                                <button class="icon-btn" id="downloadBtn">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                        <polyline points="7 10 12 15 17 10"/>
+                                        <line x1="12" y1="15" x2="12" y2="3"/>
+                                    </svg>
+                                    Download CSV
+                                </button>
+                            </div>
+                        </div>
+                        <div class="results-table-wrapper">
+                            <table class="results-table" id="resultsTable">
+                                <thead>
+                                    <tr id="resultsHeader"></tr>
+                                </thead>
+                                <tbody id="resultsBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="info-section">
+                <!-- Sample Files -->
+                <div class="info-card">
+                    <h3>Sample Files</h3>
+                    
+                    <div class="sample-item">
+                        <div class="sample-header">
+                            <span class="sample-name">Mobile Phones</span>
+                            <a href="/samples/sample_mobiles.csv" class="sample-link" download>Download</a>
+                        </div>
+                        <div class="sample-params">W: 1,2,1,1 | I: -,+,+,+</div>
+                    </div>
+
+                    <div class="sample-item">
+                        <div class="sample-header">
+                            <span class="sample-name">Laptops</span>
+                            <a href="/samples/sample_laptops.csv" class="sample-link" download>Download</a>
+                        </div>
+                        <div class="sample-params">W: 1,1,1,2,2 | I: -,+,+,+,+</div>
+                    </div>
+                </div>
+
+                <!-- Requirements -->
+                <div class="info-card">
+                    <h3>Requirements</h3>
+                    <ul class="info-list">
+                        <li>CSV must have 3+ columns</li>
+                        <li>First column: alternative names</li>
+                        <li>Other columns: numeric values only</li>
+                        <li>Weights = Impacts = Criteria count</li>
+                        <li>Impacts must be '+' or '-'</li>
+                        <li>Separate values with commas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-text">
+                Powered by <a href="https://pypi.org/project/topsis-samiksha-102317096/" target="_blank" class="footer-link">topsis-samiksha-102317096</a>
+            </div>
+            <div class="footer-links">
+                <a href="https://github.com/samiksha-bansal1/Topsis-Samiksha-102317096" class="footer-link" target="_blank">GitHub</a>
+                <a href="https://github.com/samiksha-bansal1/Topsis-Samiksha-102317096#usage" class="footer-link" target="_blank">Docs</a>
+                <a href="https://pypi.org/project/topsis-samiksha-102317096/" class="footer-link" target="_blank">Package</a>
+            </div>
+        </div>
+    </footer>
+
     <!-- Toast -->
-    <div id="toast" class="toast {% if error %}error{% endif %}">
-        {% if error %}
-            ❌ {{ error }}
-        {% else %}
-            ✅ TOPSIS Result Generated Successfully
-        {% endif %}
+    <div id="toast" class="toast">
+        <span class="toast-message" id="toastMessage"></span>
     </div>
 
     <script>
-        window.onload = function() {
-            {% if toast %}
-                const toast = document.getElementById("toast");
-                toast.classList.add("show");
-                setTimeout(() => { 
-                    toast.classList.remove("show"); 
-                }, 3000);
-            {% endif %}
-        };
+        // Form validation
+        const form = document.getElementById('topsisForm');
+        const weightsInput = document.getElementById('weights');
+        const impactsInput = document.getElementById('impacts');
+        const emailInput = document.getElementById('email');
+        const fileInput = document.getElementById('file');
+        const submitBtn = document.getElementById('submitBtn');
+        const spinner = document.getElementById('spinner');
+        const btnText = document.getElementById('btnText');
+        const resultsSection = document.getElementById('resultsSection');
 
-        // Clear form after successful submission
-        {% if toast and not error %}
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.querySelector('form');
-            if (form) {
-                form.reset();
+        // Real-time validation
+        weightsInput.addEventListener('input', validateWeights);
+        impactsInput.addEventListener('input', validateImpacts);
+        emailInput.addEventListener('input', validateEmail);
+        fileInput.addEventListener('change', validateFile);
+
+        function validateWeights() {
+            const weightsError = document.getElementById('weightsError');
+            const value = weightsInput.value.trim();
+            
+            if (!value) {
+                weightsInput.classList.remove('error');
+                weightsError.classList.remove('show');
+                return false;
             }
+
+            const weights = value.split(',').map(w => w.trim());
+            const allNumeric = weights.every(w => !isNaN(w) && w !== '');
+            
+            if (!allNumeric) {
+                weightsInput.classList.add('error');
+                weightsError.textContent = 'Weights must be numeric values separated by commas';
+                weightsError.classList.add('show');
+                return false;
+            }
+
+            weightsInput.classList.remove('error');
+            weightsError.classList.remove('show');
+            checkMatchingCounts();
+            return true;
+        }
+
+        function validateImpacts() {
+            const impactsError = document.getElementById('impactsError');
+            const value = impactsInput.value.trim();
+            
+            if (!value) {
+                impactsInput.classList.remove('error');
+                impactsError.classList.remove('show');
+                return false;
+            }
+
+            const impacts = value.split(',').map(i => i.trim());
+            const allValid = impacts.every(i => i === '+' || i === '-');
+            
+            if (!allValid) {
+                impactsInput.classList.add('error');
+                impactsError.textContent = 'Impacts must be "+" or "-" separated by commas';
+                impactsError.classList.add('show');
+                return false;
+            }
+
+            impactsInput.classList.remove('error');
+            impactsError.classList.remove('show');
+            checkMatchingCounts();
+            return true;
+        }
+
+        function checkMatchingCounts() {
+            const weightsValue = weightsInput.value.trim();
+            const impactsValue = impactsInput.value.trim();
+            
+            if (!weightsValue || !impactsValue) return;
+
+            const weightsCount = weightsValue.split(',').length;
+            const impactsCount = impactsValue.split(',').length;
+
+            const weightsError = document.getElementById('weightsError');
+            const impactsError = document.getElementById('impactsError');
+
+            if (weightsCount !== impactsCount) {
+                weightsInput.classList.add('error');
+                impactsInput.classList.add('error');
+                
+                const errorMsg = `Count mismatch: ${weightsCount} weights vs ${impactsCount} impacts`;
+                weightsError.textContent = errorMsg;
+                impactsError.textContent = errorMsg;
+                weightsError.classList.add('show');
+                impactsError.classList.add('show');
+                return false;
+            }
+
+            return true;
+        }
+
+        function validateEmail() {
+            const emailError = document.getElementById('emailError');
+            const value = emailInput.value.trim();
+            
+            if (!value) {
+                emailInput.classList.remove('error');
+                emailError.classList.remove('show');
+                return false;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!emailRegex.test(value)) {
+                emailInput.classList.add('error');
+                emailError.classList.add('show');
+                return false;
+            }
+
+            emailInput.classList.remove('error');
+            emailError.classList.remove('show');
+            return true;
+        }
+
+        function validateFile() {
+            const fileError = document.getElementById('fileError');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                fileError.classList.remove('show');
+                return false;
+            }
+
+            if (!file.name.endsWith('.csv')) {
+                fileError.textContent = 'Only CSV files are allowed';
+                fileError.classList.add('show');
+                return false;
+            }
+
+            fileError.classList.remove('show');
+            return true;
+        }
+
+        // Form submission
+        form.addEventListener('submit', function(e) {
+            const isWeightsValid = validateWeights();
+            const isImpactsValid = validateImpacts();
+            const isEmailValid = validateEmail();
+            const isFileValid = validateFile();
+
+            if (!isWeightsValid || !isImpactsValid || !isEmailValid || !isFileValid) {
+                e.preventDefault();
+                showToast('Please fix all validation errors', 'error');
+                return;
+            }
+
+            submitBtn.disabled = true;
+            btnText.textContent = 'Processing...';
+            spinner.style.display = 'inline-block';
+        });
+
+        // Display results if available
+        {% if results %}
+        window.addEventListener('DOMContentLoaded', function() {
+            displayResults({{ results | tojson }});
+        });
+        {% endif %}
+
+        function displayResults(data) {
+            const resultsSection = document.getElementById('resultsSection');
+            const resultsHeader = document.getElementById('resultsHeader');
+            const resultsBody = document.getElementById('resultsBody');
+            
+            // Clear previous results
+            resultsHeader.innerHTML = '';
+            resultsBody.innerHTML = '';
+            
+            // Get headers from the first row (preserves original order from CSV)
+            const headers = Object.keys(data[0]);
+            
+            // Build header
+            headers.forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = header;
+                resultsHeader.appendChild(th);
+            });
+            
+            // Build rows
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                headers.forEach(header => {
+                    const td = document.createElement('td');
+                    
+                    if (header === 'Rank') {
+                        const badge = document.createElement('span');
+                        badge.className = `rank-badge rank-${row[header]}`;
+                        badge.textContent = row[header];
+                        td.appendChild(badge);
+                    } else if (header === 'Topsis Score' || header.toLowerCase().includes('score')) {
+                        td.className = 'score-cell';
+                        td.textContent = typeof row[header] === 'number' ? row[header].toFixed(4) : row[header];
+                    } else {
+                        td.textContent = row[header];
+                    }
+                    
+                    tr.appendChild(td);
+                });
+                resultsBody.appendChild(tr);
+            });
+            
+            // Show results section
+            resultsSection.classList.add('show');
+            
+            // Store data for download
+            window.resultsData = data;
+            
+            // Scroll to results
+            setTimeout(() => {
+                resultsSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
+
+        // Download functionality
+        document.getElementById('downloadBtn')?.addEventListener('click', function() {
+            if (!window.resultsData) return;
+            
+            const csv = convertToCSV(window.resultsData);
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'topsis_results.csv';
+            a.click();
+            window.URL.revokeObjectURL(url);
+        });
+
+        function convertToCSV(data) {
+            const headers = Object.keys(data[0]);
+            const rows = data.map(row => 
+                headers.map(header => {
+                    const value = row[header];
+                    return typeof value === 'string' && value.includes(',') 
+                        ? `"${value}"` 
+                        : value;
+                }).join(',')
+            );
+            return [headers.join(','), ...rows].join('\n');
+        }
+
+        // Toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            toast.className = `toast ${type} show`;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Show Flask messages
+        {% if toast %}
+        window.addEventListener('DOMContentLoaded', function() {
+            {% if error %}
+            showToast('{{ error }}', 'error');
+            {% else %}
+            showToast('Analysis completed! Results shown below and sent to your email.', 'success');
+            {% endif %}
         });
         {% endif %}
     </script>
