@@ -60,3 +60,6 @@ htmlcov/
 # Deployment
 *.pid
 *.sock
+
+!samples/
+!samples/*.csv
